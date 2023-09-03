@@ -8,6 +8,7 @@ import * as ose from "./systems/ose.js";
 import * as demonlord from "./systems/demonlord.js";
 import * as cyberpunk from "./systems/cyberpunk-red-core.js";
 import * as worldbuilding from "./systems/worldbuilding.js";
+import * as wfrp4e from "./systems/wfrp4e.js";
 
 export class helper{
   static register(){
@@ -128,8 +129,13 @@ export class helper{
       case "worldbuilding" :
         if(settings.value("defaultmacro")) worldbuilding.register_helper();
         break;
+      case "wfrp4e" :
+        if(settings.value("defaultmacro")) wfrp4e.register_helper();
+        break;
     }
     if(sheetHooks){
+      console.log('sheetHooks')
+      console.log(sheetHooks)
       Object.entries(sheetHooks).forEach(([preKey, obj])=> {
         if(obj instanceof Object)
           Object.entries(obj).forEach(([key, str])=> {
@@ -149,25 +155,28 @@ export class helper{
       let itemImages = html.find(str);
 
       logger.debug("changeButtonExecution | ", { app, html, str, itemImages});
-  
+
       for(let img of itemImages){
         img = $(img);
         let li = img.parents(".item");
         let id = li.attr("data-item-id") ?? img.attr("data-item-id");
-        if(!id) return logger.debug("Id Error | ", img, li, id);
-        
+        if (!id) {
+          logger.debug("Id Error | ", img, li, id);
+          continue;
+        }
+
         let item = app.actor.items.get(id);
 
         logger.debug("changeButtonExecution | for | ", { img, li, id, item });
-  
+
         if(item.hasMacro()){
           if(settings.value("click")){
             img.contextmenu((event) => { item.executeMacro(event); })
           }else{
             img.off();
-            img.click((event)=> { 
+            img.click((event)=> {
               logger.debug("Img Click | ", img, event);
-              item.executeMacro(event); 
+              item.executeMacro(event);
             });
           }
 
@@ -202,6 +211,9 @@ export class helper{
         break;
       case "worldbuilding" :
         if(settings.value("charsheet")) return worldbuilding.sheetHooks();
+        break;
+      case "wfrp4e" :
+        if(settings.value("charsheet")) return wfrp4e.sheetHooks();
         break;
     }
   }
