@@ -1,6 +1,35 @@
 {
+  "id": "itemacro",
   "title": "Item Macro",
+  "version": "<<autoreplaced>>",
+  "url": "<<autoreplaced>>",
+  "manifest": "<<autoreplaced>>",
+  "download": "<<autoreplaced>>",
+  "readme": "<<autoreplaced>>",
+  "changelog": "<<autoreplaced>>",
+  "bugs": "<<autoreplaced>>",
   "description": "A module that allows macros to be stored in items and executed in various places.",
+  "authors": [
+    {
+      "name": "Kekilla",
+      "discord": "Kekilla#7036"
+    },
+    {
+      "name": "Honeybadger",
+      "discord": "honeybadger#2614",
+      "url": "https://ko-fi.com/badgerwerks"
+    },
+    {
+      "name": "Forien",
+      "discord": "forien",
+      "email": "mr.forien@gmail.com",
+      "url": "https://www.patreon.com/foundryworkshop"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11.308"
+  },
   "esmodules": [
     "scripts/hooks.js"
   ],
@@ -8,29 +37,7 @@
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json",
-      "flags": {}
+      "path": "lang/en.json"
     }
-  ],
-  "url": "https://github.com/Kekilla0/Item-Macro",
-  "id": "itemacro",
-  "authors": [
-    {
-      "name": "Kekilla#7036",
-      "flags": {}
-    },{
-      "name": "honeybadger#2614",
-      "url": "https://ko-fi.com/badgerwerks",
-      "flags": {}
-    }
-  ],
-  "compatibility": {
-    "minimum": "0.8.0",
-    "verified": "10"
-  },
-  "name": "itemacro",
-  "minimumCoreVersion": "0.8.0",
-  "version": "!master",
-  "manifest": "<replaced>",
-  "download": "<replaced>"
+  ]
 }
