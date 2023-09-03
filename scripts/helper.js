@@ -15,6 +15,7 @@ export class helper{
     logger.info(`Registering Helper Functions.`);
     helper.registerItem();
     helper.systemHandler();
+    helper.postMessage();
   }
 
   static registerItem(){
@@ -24,7 +25,7 @@ export class helper{
       logger.debug("Item | hasMacro | ", { flag });
       return !!(flag?.command ?? flag?.data?.command);
     }
-	  
+
     Item.prototype.getMacro = function(){
       let hasMacro = this.hasMacro();
       let flag = this.getFlag(settings.id, `macro`);
@@ -35,7 +36,7 @@ export class helper{
 	const command = !!flag?.command;
         return new Macro( command ? flag : flag?.data );
       }
-	    
+
       return new Macro({ img : this.img, name : this.name, scope : "global", type : "script", });
     }
 
@@ -67,7 +68,7 @@ export class helper{
       const macro = item.getMacro();
       const speaker = ChatMessage.getSpeaker({actor : item.actor});
       const actor = item.actor ?? game.actors.get(speaker.actor);
-      
+
       /* MMH@TODO Check the types returned by linked and unlinked */
 			//const token = item.actor?.token?.object ?? canvas.tokens.get(speaker.token); //v9 version
       const token = canvas.tokens.get(speaker.token); //v10 branch version (verify operation)
@@ -224,30 +225,30 @@ export class helper{
     contextOptions.push({
       name : settings.i18n("context.label"),
       icon : '<i class="fas fa-redo"></i>',
-      condition : () => game.user.isGM, 
+      condition : () => game.user.isGM,
       callback : li => updateMacros(origin, li?.data("entry-id")),
     });
 
     async function updateMacros(origin, _id){
-      logger.info("Update Macros Called | ", origin, _id); 
+      logger.info("Update Macros Called | ", origin, _id);
       let item = undefined, updateInfo = [];
       if(origin === "Directory") item = game.items.get(_id);
       //if(origin === "Compendium") /* No clue */
-    
+
       let result = await Dialog.confirm({
         title : settings.i18n("context.confirm.title"),
         content : `${settings.i18n("context.confirm.content")} <br><table><tr><td> Name : <td> <td> ${item.name} </td></tr><tr><td> ID : <td><td> ${item.id} </td></tr><tr><td> Origin : <td> <td> Item ${origin} </td></tr></table>`,
       });
-    
+
       let macro = item.getMacro();
       logger.debug("updateMacros Info | ", item, macro, result);
-    
+
       if(result){
         //update game items
         for(let i of game.items.filter(e=> e.name === item.name && e.id !== item.id)){
           await updateItem({ item : i, macro , location : "Item Directory"});
         }
-    
+
         //update actor items
         for(let a of game.actors){
           await updateActor({ actor : a, name : item.name, macro, location : `Actor Directory [${a.name}]`});
@@ -259,7 +260,7 @@ export class helper{
             await updateActor({ actor : token.actor, name : item.name, macro, location : `Scene [${s.name}] Token [${t.name}]`});
           }
         }
-    
+
         await Dialog.prompt({
           title : settings.i18n("context.prompt.title"),
           content : `${settings.i18n("context.prompt.content")}<hr>${updateInfo.reduce((a,v)=> a+=`<table><tr><td> Actor : <td> <td> ${v.actor} </td></tr><tr><td> Token : <td> <td> ${v.token} </td></tr><tr><td> Item : <td> <td> ${v.item} </td></tr><tr><td> Location : <td> <td> ${v.location} </td></tr></table>`, ``)}`,
@@ -267,11 +268,11 @@ export class helper{
           options : { width : "auto", height : "auto" },
         });
       }
-    
+
       async function updateActor({ actor, name, macro, location}){
         logger.debug("Attempting Actor Update | ", actor, name, macro);
         for(let item of actor?.items?.filter(i=> i.data.name === name) || [])
-          await updateItem({ item, macro, location });      
+          await updateItem({ item, macro, location });
       }
       async function updateItem({ item, macro, location }){
         logger.debug("Attempting Item Update | ", item, macro);
@@ -280,7 +281,7 @@ export class helper{
           actor     : item?.actor.id,
           token     : item?.actor?.token?.id,
           item      : item.id,
-          location 
+          location
         });
       }
     }
@@ -296,6 +297,28 @@ export class helper{
 
   static async wait(ms){
     return new Promise((resolve)=> setTimeout(resolve, ms))
+  }
+
+  static async postMessage() {
+    if (settings.value('welcome') === false) {
+      await ChatMessage.create({
+        speaker: {
+          alias: "Item Macro",
+          actor: null,
+          scene: null,
+          token: null
+        },
+        whisper: [game.user],
+        flavor: "Automated welcome message",
+        content: `
+      <h3 class="nue">Thanks for updating the Item Macro</h3>
+      <p class="nue">Hello, I am Forien and with Kekilla's permission I took this module over from him. My job here is mostly to keep this module maintained and working on Foundry v11 and future updates. That said I am not opposed to expanding this module with additional systems or new features if there is big demand enough.</p>
+      <p class="nue">Since I took this module with next to no knowledge, keep in mind that I might not know if something is broken or not working as intended. Please feel free to contact me on Foundry Discord by pinging <code>Forien</code>. You can also join <a href="https://discord.gg/XkTFv8DRDc" target="_blank">my Discord</a> or report an <a href="https://github.com/Foundry-Workshop/Item-Macro/issues" target="_blank"> Issue on GitHub</a>.</p>
+      <p class="nue">I'm creating Foundry modules (full list of which you can find on my <a href="https://foundryvtt.com/community/forien/" target="_blank">Foundry Profile</a>) and maintaining them by spending my free time. If you would like to support me and the development of those modules, please consider <a href="https://www.patreon.com/foundryworkshop" target="_blank"><b>becoming a Patron</b></a> or donating through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6P2RRX7HVEMV2&source=url" target="_blank">PayPal</a> or <a href="https://ko-fi.com/forien" target="_blank">Ko-Fi</a></p>
+      `,
+      });
+    }
+    game.settings.set(settings.id, 'welcome',true);
   }
 
 }

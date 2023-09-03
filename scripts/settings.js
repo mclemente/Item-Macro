@@ -57,6 +57,9 @@ export class settings{
         scope : "world", config : true, default : false, type : Boolean, onChange :  ()=> settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
+      welcome: {
+        scope : "client", config : false, default : false, type : Boolean
+      }
     };
 
 
