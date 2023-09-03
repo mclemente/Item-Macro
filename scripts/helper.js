@@ -213,7 +213,7 @@ export class helper{
       name : settings.i18n("context.label"),
       icon : '<i class="fas fa-redo"></i>',
       condition : () => game.user.isGM, 
-      callback : li => updateMacros(origin, li?.data("entityId")),
+      callback : li => updateMacros(origin, li?.data("entry-id")),
     });
 
     async function updateMacros(origin, _id){
