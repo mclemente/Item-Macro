@@ -13,8 +13,9 @@ You can execute the macro from the "item" class using the executeMacro(...args) 
 
 1. Inside Foundry's Configuration and Setup screen, go to **Add-on Modules**
 2. Click "Install Module"
-3. Seach for the Module, install in the Module Manager.
-4. In the Manifest URL field paste: `https://github.com/Kekilla0/Item-Macro/releases/download/v1.5.3/module.json`
+3. Install module using one of the two approaches:
+  - Search for the Module and install using the Module Manager, or
+  - In the Manifest URL field paste: `https://github.com/Foundry-Workshop/Item-Macro/releases/latest/download/module.json`.
 
 # Usage
 
