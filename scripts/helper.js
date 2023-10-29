@@ -159,7 +159,9 @@ export class helper{
 
       for(let img of itemImages){
         img = $(img);
-        let li = img.parents(".item");
+        
+        let itemTag = game.system.hasOwnProperty('itemTag') ? game.system.itemTag() : '.item'
+        let li = img.parents(itemTag);
         let id = li.attr("data-item-id") ?? img.attr("data-item-id");
         if (!id) {
           logger.debug("Id Error | ", img, li, id);
