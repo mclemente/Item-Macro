@@ -24,9 +24,8 @@ export function register_helper()
 
 export function sheetHooks()
 {
-  const renderSheets = {    
-    ActorSheet : ".item .rollable",
-    //DwActorNpcSheet : ".item .item-avatar",
+  const renderSheets = {
+    DLCharacterSheet : ".dl-item-row .dl-rollable"
   };
   const renderedSheets = {
 

@@ -140,7 +140,7 @@ export class helper{
       Object.entries(sheetHooks).forEach(([preKey, obj])=> {
         if(obj instanceof Object)
           Object.entries(obj).forEach(([key, str])=> {
-            Hooks.on(`${preKey}${key}`, (app, html, data) => changeButtonExecution(app, html, str, sheetHooks.onChange));
+            Hooks.on(`${preKey}${key}`, (app, html, _data) => changeButtonExecution(app, html, str, sheetHooks.onChange));
           });
       });
     }
@@ -157,34 +157,39 @@ export class helper{
 
       logger.debug("changeButtonExecution | ", { app, html, str, itemImages});
 
-      for(let img of itemImages){
+      for (let img of itemImages) {
         img = $(img);
-        
-        let itemTag = game.system.hasOwnProperty('itemTag') ? game.system.itemTag() : '.item'
-        let li = img.parents(itemTag);
-        let id = li.attr("data-item-id") ?? img.attr("data-item-id");
+
+        // @todo refactor into class-based systems with default parent method
+        const itemTag = game.system.hasOwnProperty('itemTag') ? game.system.itemTag() : '.item';
+        const li = img.parents(itemTag);
+        const id = li.attr("data-item-id") ?? img.attr("data-item-id");
+
         if (!id) {
           logger.debug("Id Error | ", img, li, id);
           continue;
         }
 
-        let item = app.actor.items.get(id);
+        const item = app.actor.items.get(id);
 
-        logger.debug("changeButtonExecution | for | ", { img, li, id, item });
+        logger.debug("changeButtonExecution | for | ", {img, li, id, item});
 
-        if(item.hasMacro()){
-          if(settings.value("click")){
-            img.contextmenu((event) => { item.executeMacro(event); })
-          }else{
-            img.off();
-            img.click((event)=> {
-              logger.debug("Img Click | ", img, event);
-              item.executeMacro(event);
-            });
-          }
-
-          onChange.forEach( fn => fn(img, item, html) );
+        if (!item.hasMacro()) {
+          continue;
         }
+
+        if (settings.value("click")) {
+          img.contextmenu((event) => {
+            item.executeMacro(event);
+          })
+        } else {
+          img.off();
+          img.click((event) => {
+            logger.debug("Img Click | ", img, event);
+            item.executeMacro(event);
+          });
+        }
+        onChange.forEach(fn => fn(img, item, html));
       }
     }
   }
@@ -289,12 +294,13 @@ export class helper{
     }
   }
 
-  static async waitFor(fn, m = 200, w = 100, i = 0){
-    while(!fn(i, ((i*w)/100)) && i < m){
+  static async waitFor(fn, m = 200, w = 100, i = 0) {
+    while (!fn(i, ((i * w) / 100)) && i < m) {
       i++;
       await helper.wait(w);
     }
-    return i === m ? false : true;
+
+    return i !== m;
   }
 
   static async wait(ms){
