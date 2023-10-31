@@ -72,6 +72,10 @@ export function register_helper()
 			return item.executeMacro();
 		return actor.rollSpell(item.id);
 	}
+
+	game.system.itemTag = () => {
+		return '.dl-item-row'
+	}
 }
 
 export function sheetHooks()
