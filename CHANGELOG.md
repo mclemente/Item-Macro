@@ -2,6 +2,9 @@
 
 ## v1.X.X
 
+### v1.10.2
+* Revert accidental change to dungeonworld file...
+
 ### v1.10.1
 * Fixed the Item Macro not firing on the Actor Sheet in the Shadow of the Demon Lord system
 
