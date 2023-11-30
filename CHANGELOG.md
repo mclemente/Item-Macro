@@ -2,6 +2,9 @@
 
 ## v1.X.X
 
+### v1.10.3
+* Fixed Item Macro crashing with disabled canvas
+
 ### v1.10.2
 * Revert accidental change to dungeonworld file...
 

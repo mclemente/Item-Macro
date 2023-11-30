@@ -70,8 +70,7 @@ export class helper{
       const actor = item.actor ?? game.actors.get(speaker.actor);
 
       /* MMH@TODO Check the types returned by linked and unlinked */
-			//const token = item.actor?.token?.object ?? canvas.tokens.get(speaker.token); //v9 version
-      const token = canvas.tokens.get(speaker.token); //v10 branch version (verify operation)
+      const token = canvas.tokens?.get(speaker.token);
       const character = game.user.character;
       const event = getEvent();
 
