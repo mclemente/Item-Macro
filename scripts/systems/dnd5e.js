@@ -85,6 +85,7 @@ export function applyTidy5eCompatibility() {
   Hooks.on("tidy5e-sheet.actorPreUseItem", (item, config, options) => {
     const shouldExecuteMacro =
       settings.value("charsheet") &&
+      !settings.value("click") &&
       item.hasMacro();
     if (shouldExecuteMacro) {
       item.executeMacro();
