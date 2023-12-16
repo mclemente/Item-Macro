@@ -2,6 +2,9 @@
 
 ## v1.X.X
 
+### v1.10.4
+* Added `Tidy 5e Sheet` support, by [@kgar](https://github.com/kgar)
+
 ### v1.10.3
 * Fixed Item Macro crashing with disabled canvas
 

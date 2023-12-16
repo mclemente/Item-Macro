@@ -59,7 +59,8 @@ If you wish to support module's development, please consider [becoming my Patreo
 
 # Acknowledgements
 * Big shoutout to Kekilla, the original author, for making this module!
-* Thanks to Honeybadger for contributions and keeping module functional 
+* Thanks to Honeybadger for contributions and keeping module functional
+* Thanks to kgar for contributing compatibility with his `Tidy 5e Sheet` module!
 
 # License
 

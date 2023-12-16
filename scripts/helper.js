@@ -107,7 +107,6 @@ export class helper{
     switch(game.system.id) {
       case "dnd5e" :
         if(settings.value("defaultmacro")) dnd5e.register_helper();
-        dnd5e.applyTidy5eCompatibility();
         break;
       case "sfrpg" :
         if(settings.value("defaultmacro")) sfrpg.register_helper();
@@ -194,10 +193,13 @@ export class helper{
     }
   }
 
-  static getSheetHooks(){
-    switch(game.system.id) {
+  static getSheetHooks() {
+    switch (game.system.id) {
       case "dnd5e" :
-        if(settings.value("charsheet")) return dnd5e.sheetHooks();
+        if (settings.value("charsheet")) {
+          dnd5e.applyTidy5eCompatibility();
+          return dnd5e.sheetHooks();
+        }
         break;
       case "sfrpg" :
         if(settings.value("charsheet")) return sfrpg.sheetHooks();
