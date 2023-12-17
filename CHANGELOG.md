@@ -2,6 +2,9 @@
 
 ## v1.X.X
 
+### v1.10.5
+* Fixed the `Tidy 5e Sheet` stacking issue introduced in previous update 
+
 ### v1.10.4
 * Added `Tidy 5e Sheet` support, by [@kgar](https://github.com/kgar)
 
