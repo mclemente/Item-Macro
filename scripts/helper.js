@@ -106,7 +106,8 @@ export class helper{
 
     switch(game.system.id) {
       case "dnd5e" :
-        if(settings.value("defaultmacro")) dnd5e.register_helper();
+        if (settings.value("defaultmacro")) dnd5e.register_helper();
+        dnd5e.applyTidy5eCompatibility();
         break;
       case "sfrpg" :
         if(settings.value("defaultmacro")) sfrpg.register_helper();
@@ -133,9 +134,8 @@ export class helper{
         if(settings.value("defaultmacro")) wfrp4e.register_helper();
         break;
     }
-    if(sheetHooks){
-      console.log('sheetHooks')
-      console.log(sheetHooks)
+
+    if (sheetHooks){
       Object.entries(sheetHooks).forEach(([preKey, obj])=> {
         if(obj instanceof Object)
           Object.entries(obj).forEach(([key, str])=> {
@@ -196,10 +196,7 @@ export class helper{
   static getSheetHooks() {
     switch (game.system.id) {
       case "dnd5e" :
-        if (settings.value("charsheet")) {
-          dnd5e.applyTidy5eCompatibility();
-          return dnd5e.sheetHooks();
-        }
+        if (settings.value("charsheet")) return dnd5e.sheetHooks();
         break;
       case "sfrpg" :
         if(settings.value("charsheet")) return sfrpg.sheetHooks();
