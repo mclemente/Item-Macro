@@ -5,7 +5,6 @@ export function register_helper() {
   logger.info(`Registering WFRP4e Helper`);
 
   game.wfrp4e.utility.rollItemMacro = function (name, type, bypassData) {
-    console.log('hello world!');
     const speaker = ChatMessage.getSpeaker();
     let actor, item;
 
