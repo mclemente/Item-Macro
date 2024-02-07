@@ -32,5 +32,7 @@
     "error.editImage":"You cannot edit the icon for this macro.",
     "error.macroExecution" : "There was an error in your macro syntax. See the console (F12) for details",
 
-    "itemacro.dnd5e.v9deprecation": "ITEM MACRO: The hotbar functionality has been disabled for v9."
+    "itemacro.dnd5e.v9deprecation": "ITEM MACRO: The hotbar functionality has been disabled for v9.",
+    "itemacro.dnd5e.systemDeprecationv3": "ITEM MACRO: New module versions no longer support DND5e below 3.0.0. Please update your system or install Item Macro v1.10.5.",
+    "itemacro.dnd5e.useFunctionWarning": "ITEM MACRO: usage of `item.use()` is no longer supported in Item Macros. Return `true` in macro in order to fall back to system's use method."
 }

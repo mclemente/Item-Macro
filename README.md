@@ -11,11 +11,14 @@ You can execute the macro from the "item" class using the executeMacro(...args) 
 
 # Installation
 
+_**Item Macro v1.11.0 onwards will not work with DnD 5e 2.4.**_   
+_If you do not use the newest version of the DnD 5e system, please do not update Item Macro and install v1.10.5 instead using [this manifest link](https://github.com/Foundry-Workshop/Item-Macro/releases/download/v1.10.5/module.json)._ 
+
 1. Inside Foundry's Configuration and Setup screen, go to **Add-on Modules**
 2. Click "Install Module"
 3. Install module using one of the two approaches:
-  - Search for the Module and install using the Module Manager, or
-  - In the Manifest URL field paste: `https://github.com/Foundry-Workshop/Item-Macro/releases/latest/download/module.json`.
+   - Search for the Module and install using the Module Manager, or
+   - In the Manifest URL field paste: `https://github.com/Foundry-Workshop/Item-Macro/releases/latest/download/module.json`.
 
 # Usage
 
@@ -33,12 +36,24 @@ Added context menu support allowing GM users to mass update item-macros on like 
 
 ## Added Item Functionality
 
-1. Item.hasMacro() => returns boolean on if the item has a macro command
-2. Item.getMacro() => returns Macro instance, if the item has a macro command
-3. Item.setMacro(Macro) => overwrites and saves given Macro to the Item
-4. Item.executeMacro(...args) => executes Macro command, giving `item`, `speaker`, `actor`, `token`, `character`, and `event` constants. This is recognized as the macro itself. Pass an event as the first argument.
+1. `Item.hasMacro()` => returns boolean on if the item has a macro command
+2. `Item.getMacro()` => returns Macro instance, if the item has a macro command
+3. `Item.setMacro(Macro)` => overwrites and saves given Macro to the Item
+4. `Item.executeMacro(...args)` => executes Macro command, giving `item`, `speaker`, `actor`, `token`, `character`, and `event` constants. This is recognized as the macro itself. Pass an event as the first argument.
 
 ## Added System Functionality
+
+### Dungeons & Dragons Fifth Edition
+
+Starting from v1.11.0, Item Macro changed how it's supporting DnD 5e (3.0.0+). Here is the breakdown:
+1. Item Macro now directly listens to `dnd5e.preUseItem` Hook
+   - Because of that, there no longer is distinction between using item from sheet, macro or any other way
+   - Because of that, using plain `item.use()` in Item Macro is now disabled as it can lead to uncontrolled infinite loops
+   - Since good practice dictates that all 3rd party modules, including custom sheets, should make use of `item.use()`, this means that all of them should now be supported by default
+2. `Character Sheet Hook` and `Right Click Override` settings for dnd5e are now removed in favor of single `Override default macro execution`
+3. Item Macros that you wish to still execute "standard" `item.use()` must now do it in one of two ways:
+   1. Return `true` from macro, or
+   2. Call `item.use({}, {skipItemMacro: true})` instead (passing `skipItemMacro = true` in `options` argument)
 
 ### Simple Worldbuilding
 

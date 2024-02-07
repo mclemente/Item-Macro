@@ -62,6 +62,10 @@ export class settings{
       }
     };
 
+    if (game.system.id === 'dnd5e') {
+      delete settingData.charsheet;
+      delete settingData.click;
+    }
 
     Object.entries(settingData).forEach(([key, data])=> {
       game.settings.register(

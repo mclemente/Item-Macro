@@ -1,79 +1,50 @@
-import { logger } from "../logger.js";
-import { settings } from "../settings.js";
+import {logger} from "../logger.js";
+import {settings} from "../settings.js";
 
-export function register_helper(){
-    logger.info(`Registering DND5E Helpers`);
-    
-    /*
-        Override
-    */
-    const itemMacroUseItem = function(name) {
-        let actor;
-        const speaker = ChatMessage.getSpeaker();
-        if ( speaker.token ) actor = game.actors.tokens[speaker.token];
-        actor ??= game.actors.get(speaker.actor);
-        if ( !actor ) return ui.notifications.warn(game.i18n.localize("MACRO.5eNoActorSelected"));
+function preUseItem(item, config, options) {
+  if (options.skipItemMacro === true)
+    return true;
 
-        const collection = actor.items;
-        const nameKeyPath = "name";
+  if (!item.hasMacro())
+    return true;
 
-        // Find the item in collection
-        const documents = collection.filter(i => foundry.utils.getProperty(i, nameKeyPath) === name);
-        const type = game.i18n.localize(`DOCUMENT.Item`);
-        if ( documents.length === 0 ) {
-            return ui.notifications.warn(game.i18n.format("MACRO.5eMissingTargetWarn", { actor: actor.name, type, name }));
-        }
-        if ( documents.length > 1 ) {
-            ui.notifications.warn(game.i18n.format("MACRO.5eMultipleTargetsWarn", { actor: actor.name, type, name }));
-        }
+  if (!settings.value("defaultmacro"))
+    return true;
 
-        const item = documents[0];
-        // Trigger the item usage
-        if ( item.hasMacro() && settings.value("defaultmacro") ) {
-            return item.executeMacro();
-        }
-        return item.use();
+  item.executeMacro({config, options}).then((result) => {
+    if (result === true) {
+      options.skipItemMacro = true;
+      item.use(config, options);
     }
+  });
 
-    if ( settings.isV10 ) {
-        dnd5e.documents = { ...dnd5e.documents };
-        dnd5e.documents.macro = { ...dnd5e.documents.macro };
-        dnd5e.documents.macro.rollItem = itemMacroUseItem;
-    }
-    else {
-        console.log(game.i18n.localize("itemacro.dnd5e.v9deprecation"));
-    }
+  return false;
 }
 
-export function sheetHooks()
-{
-  const renderSheets = {
-    //Core
-    ActorSheet5eCharacter: ".item .item-image",
-    ActorSheet5eVehicle: ".item .item-image",
-    ActorSheet5eNPC: ".item .item-image",
-    //BetterNPC
-    BetterNPCActor5eSheet: ".item .rollable",
-    BetterNPCActor5eSheetDark: ".item .rollable",
-    ActorSheet5eCharacterDark: ".item .item-image",
-    //DarkSheet
-    DarkSheet: ".item .item-image",
-    ActorNPC5EDark: ".item .item-image",
-    DynamicActorSheet5e: ".item .item-image",
-    //DNDBeyond
-    DNDBeyondCharacterSheet5e: ".item .item-name .item-image",
-    //Tidy
-    //Tidy5eSheet:  ".item .item-image",
-    //Tidy5eNPC: ".item .item-image",
-    //Monster Blocks
-    MonsterBlock5e: ".item .item-name",
-  };
-  const renderedSheets = {
-    Alt5eSheet : ".item .item-image", 
-    Tidy5eSheet : ".item .item-image",
-  };
+export function register_helper() {
+  logger.info(`Registering DND5E Helpers`);
 
-  return { render : renderSheets, rendered : renderedSheets };
+  if (foundry.utils.isNewerVersion("3.0.0", game.system.version))
+    return ui.notifications.warn("itemacro.dnd5e.systemDeprecationv3", {localize: true, permanent: true});
+
+
+  Hooks.on("dnd5e.preUseItem", preUseItem)
+}
+
+export function systemValidation(macro) {
+  if (macro.command?.includes('.use()')) {
+    ui.notifications.warn("itemacro.dnd5e.useFunctionWarning", {localize: true, permanent: true});
+    return false;
+  }
+
+  return true;
+}
+
+export function sheetHooks() {
+  const renderSheets = {};
+  const renderedSheets = {};
+
+  return {render: renderSheets, rendered: renderedSheets};
 }
 
 /**
@@ -89,7 +60,7 @@ export function applyTidy5eCompatibility() {
       !settings.value("click") &&
       item.hasMacro();
     if (shouldExecuteMacro) {
-      item.executeMacro();
+      item.executeMacro({config, options});
       return false;
     }
   });
@@ -103,7 +74,7 @@ export function applyTidy5eCompatibility() {
       settings.value("click") &&
       item.hasMacro();
     if (shouldExecuteMacro) {
-      item.executeMacro();
+      item.executeMacro({options});
       options.event.preventDefault();
       options.event.stopPropagation();
     }

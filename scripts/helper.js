@@ -51,7 +51,7 @@ export class helper{
       }
     }
 
-    Item.prototype.executeMacro = function(...args){
+    Item.prototype.executeMacro = async function(...args){
       if(!this.hasMacro()) return;
       const type = settings.isV10 ? this.getMacro()?.type : this.getMacro()?.data.type;
       switch(type){
@@ -59,10 +59,10 @@ export class helper{
           //left open if chat macros ever become a thing you would want to do inside an item?
           break;
         case "script" :
-          return this._executeScript(...args);
+          return await this._executeScript(...args);
       }
     }
-    Item.prototype._executeScript = function(...args){
+    Item.prototype._executeScript = async function(...args){
       //add variable to the evaluation of the script
       const item = this;
       const macro = item.getMacro();
@@ -76,18 +76,20 @@ export class helper{
 
       logger.debug("Item | _executeScript | ", {macro, speaker, actor, token, character, item, event, args});
 
+      if (helper.systemValidation(macro) === false)
+        return;
+
       //build script execution
-      const body = `(async ()=>{
-        ${ macro.command ?? macro?.data?.command }
-      })();`;
-      const fn = Function("item", "speaker", "actor", "token", "character", "event", "args", body);
+      const scriptFunction = Object.getPrototypeOf(async function () {}).constructor;
+      const body = macro.command ?? macro?.data?.command;
+      const fn = new scriptFunction("item", "speaker", "actor", "token", "character", "event", "args", body)
 
       logger.debug("Item | _executeScript | ", { body, fn });
 
       //attempt script execution
       try {
-        fn.call(macro, item, speaker, actor, token, character, event, args);
-      }catch(err){
+        return await fn(macro, item, speaker, actor, token, character, event, args);
+      } catch (err) {
         ui.notifications.error(settings.i18n("error.macroExecution"));
         logger.error(err);
       }
@@ -196,7 +198,7 @@ export class helper{
   static getSheetHooks() {
     switch (game.system.id) {
       case "dnd5e" :
-        if (settings.value("charsheet")) return dnd5e.sheetHooks();
+        if (settings.value("defaultmacro")) return dnd5e.sheetHooks();
         break;
       case "sfrpg" :
         if(settings.value("charsheet")) return sfrpg.sheetHooks();
@@ -304,6 +306,16 @@ export class helper{
 
   static async wait(ms){
     return new Promise((resolve)=> setTimeout(resolve, ms))
+  }
+
+  static systemValidation(macro) {
+    switch (game.system.id) {
+      case 'dnd5e':
+        return dnd5e.systemValidation(macro);
+      default:
+    }
+
+    return true;
   }
 
   static async postMessage() {
