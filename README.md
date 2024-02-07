@@ -12,7 +12,8 @@ You can execute the macro from the "item" class using the executeMacro(...args) 
 # Installation
 
 _**Item Macro v1.11.0 onwards will not work with DnD 5e 2.4.**_   
-_If you do not use the newest version of the DnD 5e system, please do not update Item Macro and install v1.10.5 instead using [this manifest link](https://github.com/Foundry-Workshop/Item-Macro/releases/download/v1.10.5/module.json)._ 
+_If you do not use the newest version of the DnD 5e system, please do not update Item Macro and install v1.10.5 instead using [this manifest link](https://github.com/Foundry-Workshop/Item-Macro/releases/download/v1.10.5/module.json)._  
+_You can read more about these changes in [v1.11.0 Release](https://github.com/Foundry-Workshop/Item-Macro/releases/tag/v1.11.0) notes._
 
 1. Inside Foundry's Configuration and Setup screen, go to **Add-on Modules**
 2. Click "Install Module"
