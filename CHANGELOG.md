@@ -1,6 +1,8 @@
 # Changelog
 
 ## v1.11
+### v1.11.1
+* Fixed Macro lacking context (and in turn having mismatched arguments)
 ### v1.11.0
 #### General
 * Changed `item.executeMacro()` method to be async

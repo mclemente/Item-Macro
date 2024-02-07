@@ -88,7 +88,7 @@ export class helper{
 
       //attempt script execution
       try {
-        return await fn(macro, item, speaker, actor, token, character, event, args);
+        return await fn.bind(macro)(item, speaker, actor, token, character, event, args);
       } catch (err) {
         ui.notifications.error(settings.i18n("error.macroExecution"));
         logger.error(err);
