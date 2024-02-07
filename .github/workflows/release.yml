@@ -53,21 +53,21 @@ jobs:
         id: moduleID
         uses: notiz-dev/github-action-json-property@release
         with:
-          path: './dist/module.json'
+          path: './module.json'
           prop_path: 'id'
 
       - name: Get mininum
         id: minimum
         uses: notiz-dev/github-action-json-property@release
         with:
-          path: './dist/module.json'
+          path: './module.json'
           prop_path: 'compatibility.minimum'
 
       - name: Get verified
         id: verified
         uses: notiz-dev/github-action-json-property@release
         with:
-          path: './dist/module.json'
+          path: './module.json'
           prop_path: 'compatibility.verified'
 
       - name: Foundry Release API
