@@ -10,7 +10,12 @@ export class DND5e extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings() {
+  registerSettings(settingsData) {
+    settingsData.charsheet.config = false;
+    settingsData.click.config = false;
+
+    settingsData.defaultmacro.name = "itemacro.dnd5e.defaultmacro.title";
+    settingsData.defaultmacro.hint = "itemacro.dnd5e.defaultmacro.hint";
   }
 
   registerSheetListeners() {

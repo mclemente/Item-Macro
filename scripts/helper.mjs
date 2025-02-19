@@ -57,7 +57,7 @@ export class helper {
     handler.registerOther();
     handler.registerSheetListeners();
 
-    if (sheetHooks) {
+    if (sheetHooks && settings.value("charsheet")) {
       Object.entries(sheetHooks).forEach(([preKey, obj]) => {
         if (obj instanceof Object)
           Object.entries(obj).forEach(([key, str]) => {

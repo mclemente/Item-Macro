@@ -15,7 +15,7 @@ export class WFRP4e extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings() {
+  registerSettings(settingsData) {
   }
 
   registerSheetListeners() {

@@ -12,7 +12,7 @@ export class Shadowrun5e extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings() {
+  registerSettings(settingsData) {
   }
 
   registerSheetListeners() {

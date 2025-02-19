@@ -34,5 +34,8 @@
 
     "itemacro.dnd5e.v9deprecation": "ITEM MACRO: The hotbar functionality has been disabled for v9.",
     "itemacro.dnd5e.systemDeprecationv3": "ITEM MACRO: New module versions no longer support DND5e below 3.0.0. Please update your system or install Item Macro v1.10.5.",
-    "itemacro.dnd5e.useFunctionWarning": "ITEM MACRO: usage of `item.use()` is no longer supported in Item Macros. Return `true` in macro in order to fall back to system's use method."
+    "itemacro.dnd5e.useFunctionWarning": "ITEM MACRO: usage of `item.use()` is no longer supported in Item Macros. Return `true` in macro in order to fall back to system's use method.",
+
+    "itemacro.dnd5e.defaultmacro.title": "Override `preUseItem` Hook",
+    "itemacro.dnd5e.defaultmacro.hint": "Enabling this will allow item macro to trigger item macro instead of default item's usage. Return `true` or call `item.use({}, {skipItemMacro: true});` to perform default item usage from item macro."
 }

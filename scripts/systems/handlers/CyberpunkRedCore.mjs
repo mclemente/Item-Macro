@@ -9,7 +9,7 @@ export class CyberpunkRedCore extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings() {
+  registerSettings(settingsData) {
   }
 
   registerSheetListeners() {

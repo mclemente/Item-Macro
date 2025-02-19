@@ -12,7 +12,7 @@ export class Dungeonworld extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings() {
+  registerSettings(settingsData) {
   }
 
   registerSheetListeners() {

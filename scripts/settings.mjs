@@ -1,4 +1,5 @@
 import {logger} from "./logger.mjs";
+import {SystemManager} from "./systems/SystemManager.mjs";
 
 export class settings {
 
@@ -62,19 +63,17 @@ export class settings {
       }
     };
 
-    if (game.system.id === 'dnd5e') {
-      delete settingData.charsheet;
-      delete settingData.click;
-    }
+    SystemManager.instance.registerSettings(settingData);
 
-    Object.entries(settingData).forEach(([key, data]) => {
-      game.settings.register(
-        settings.id, key, {
+    for (let [key, data] of Object.entries(settingData)) {
+      data = foundry.utils.mergeObject({
           name: settings.i18n(`settings.${key}.title`),
           hint: settings.i18n(`settings.${key}.hint`),
-          ...data
-        }
+        }, data)
+
+      game.settings.register(
+        settings.id, key, data
       );
-    })
+    }
   }
 }

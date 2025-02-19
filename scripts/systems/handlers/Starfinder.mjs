@@ -16,7 +16,7 @@ export class Starfinder extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings() {
+  registerSettings(settingsData) {
   }
 
   registerSheetListeners() {
