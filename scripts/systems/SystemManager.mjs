@@ -1,0 +1,78 @@
+import {BaseSystem} from "./BaseSystem.mjs";
+import {CyberpunkRedCore} from "./handlers/CyberpunkRedCore.mjs";
+import {Demonlord} from "./handlers/Demonlord.mjs";
+import {DND5e} from "./handlers/DND5e.mjs";
+import {Dungeonworld} from "./handlers/Dungeonworld.mjs";
+import {OldSchoolEssentials} from "./handlers/OldSchoolEssentials.mjs";
+import {Pathfinder2e} from "./handlers/Pathfinder2e.mjs";
+import {Shadowrun5e} from "./handlers/Shadowrun5e.mjs";
+import {Starfinder} from "./handlers/Starfinder.mjs";
+import {SWADE} from "./handlers/SWADE.mjs";
+import {WFRP4e} from "./handlers/WFRP4e.mjs";
+import {Worldbuilding} from "./handlers/Worldbuilding.mjs";
+import {WorldsWithoutNumber} from "./handlers/WorldsWithoutNumber.mjs";
+
+export class SystemManager {
+  /**
+   * @var {BaseSystem|null}
+   */
+  static #instance;
+
+  /**
+   *
+   */
+  static #systemHandlers = [
+    CyberpunkRedCore,
+    Demonlord,
+    DND5e,
+    Dungeonworld,
+    OldSchoolEssentials,
+    Pathfinder2e,
+    Shadowrun5e,
+    Starfinder,
+    SWADE,
+    WFRP4e,
+    Worldbuilding,
+    WorldsWithoutNumber,
+  ];
+
+  /**
+   * @type {{string: BaseSystem}}
+   */
+  static #registeredHandlers = {
+
+  };
+
+  /**
+   * @returns {BaseSystem}
+   */
+  static get instance() {
+    if (this.#instance)
+      return this.#instance;
+
+    return this.#getSystemHandler();
+  }
+
+  static set instance(value) {
+    throw new Error(`Attempted to override ${this.constructor.name}#instance property with ${value} value. Property is read-only.`);
+  }
+
+  static registerHandlers() {
+    for (const handler of this.#systemHandlers) {
+      if (handler.prototype instanceof BaseSystem)
+        this.#registeredHandlers[handler.system] = handler;
+    }
+  }
+
+  /**
+   * @returns {BaseSystem|null}
+   */
+  static #getSystemHandler() {
+    const handler = this.#registeredHandlers[game.system.id];
+    this.#instance = new handler();
+
+    return this.#instance;
+  }
+}
+
+

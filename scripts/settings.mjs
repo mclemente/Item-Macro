@@ -1,4 +1,4 @@
-import { logger } from "./logger.js";
+import { logger } from "./logger.mjs";
 
 export class settings{  
 

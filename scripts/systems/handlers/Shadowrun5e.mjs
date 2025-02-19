@@ -1,13 +1,32 @@
-import { logger } from "../logger.js";
-import { settings } from "../settings.js";
+import {BaseSystem} from "../BaseSystem.mjs";
+import {settings} from "../../settings.mjs";
 
-export function register_helper() {
-  logger.info(`Registering Shadowrun5e System Helpers`);
+export class Shadowrun5e extends BaseSystem {
+  static system = 'shadowrun5e';
 
-  /*
-   Override
- */
-  game.shadowrun5e.rollItemMacro = (itemName) => {
+  registerSettings() {}
+
+  registerSheetListeners() {}
+
+  registerOther() {
+    game.shadowrun5e.rollItemMacro = this.rollItemMacro;
+  }
+
+  registerHooks() {}
+
+  get sheetRenderHooks() {
+    const {render, rendered, onChange} = super.sheetRenderHooks;
+
+    render.SR5BaseActorSheet = ".item-text.item-name.has-desc";
+
+    return {render, rendered, onChange};
+  }
+
+  systemValidation(macro) {
+    return true;
+  }
+
+  rollItemMacro(itemName) {
     if (!game || !game.actors) return;
 
     const speaker = ChatMessage.getSpeaker();
@@ -15,6 +34,7 @@ export function register_helper() {
     if (speaker.token) actor = game.actors.tokens[speaker.token];
     if (!speaker.actor) return;
     if (!actor) actor = game.actors.get(speaker.actor);
+
     const item = actor ? actor.items.find((i) => i.name === itemName) : null;
     if (!item) {
       return ui.notifications?.warn(`Your controlled Actor does not have an item named ${itemName}`);
@@ -27,15 +47,4 @@ export function register_helper() {
       return item.castAction();
     }
   }
-}
-
-export function sheetHooks() {
-  const renderSheets = {
-    SR5BaseActorSheet: ".item-text.item-name.has-desc"
-  };
-
-  const renderedSheets = {
-  };
-
-  return { render: renderSheets, rendered: renderedSheets };
 }

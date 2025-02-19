@@ -1,10 +1,33 @@
-import {logger} from "../logger.js";
-import {settings} from "../settings.js";
+import {BaseSystem} from "../BaseSystem.mjs";
+import {settings} from "../../settings.mjs";
 
-export function register_helper() {
-  logger.info(`Registering WFRP4e Helper`);
+export class WFRP4e extends BaseSystem {
+  static system = 'wfrp4e';
 
-  game.wfrp4e.utility.rollItemMacro = function (name, type, bypassData) {
+  registerSettings() {}
+
+  registerSheetListeners() {}
+
+  registerOther() {}
+
+  registerHooks() {}
+
+  get sheetRenderHooks() {
+    const {render, rendered, onChange} = super.sheetRenderHooks;
+
+    render.ActorSheetWfrp4eCharacter = ".skills .item .name, .combat .item .weapon-item-name, .magic .item .name, .religion .item .name";
+    render.ActorSheetWfrp4eCreature = ".creature-lists .item .weapon-item.name, .creature-lists .traits .name, .skills .item .name, .combat .item .weapon-item-name, .magic .item .name, .religion .item .name";
+    render.ActorSheetWfrp4eNPC = ".skills .item .name, .combat .item .weapon-item-name, .magic .item .name, .religion .item .name";
+    render.ActorSheetWfrp4eVehicle = ".inventory-list .item .vehicle-weapon-name";
+
+    return {render, rendered, onChange};
+  }
+
+  systemValidation(macro) {
+    return true;
+  }
+
+  rollItemMacro (name, type, bypassData) {
     const speaker = ChatMessage.getSpeaker();
     let actor, item;
 
@@ -38,20 +61,3 @@ export function register_helper() {
     }
   }
 }
-
-export function sheetHooks() {
-  const renderSheets = {
-    //Core
-    ActorSheetWfrp4eCharacter: ".skills .item .name, .combat .item .weapon-item-name, .magic .item .name, .religion .item .name",
-    ActorSheetWfrp4eCreature: ".creature-lists .item .weapon-item.name, .creature-lists .traits .name, .skills .item .name, .combat .item .weapon-item-name, .magic .item .name, .religion .item .name",
-    ActorSheetWfrp4eNPC: ".skills .item .name, .combat .item .weapon-item-name, .magic .item .name, .religion .item .name",
-    ActorSheetWfrp4eVehicle: ".inventory-list .item .vehicle-weapon-name",
-  };
-  const renderedSheets = {
-
-  };
-
-  return {render: renderSheets, rendered: renderedSheets};
-}
-
-

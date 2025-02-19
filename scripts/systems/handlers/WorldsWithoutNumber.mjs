@@ -1,18 +1,38 @@
-import { logger } from "../logger.js";
-import { settings } from "../settings.js";
+import {BaseSystem} from "../BaseSystem.mjs";
+import {settings} from "../../settings.mjs";
 
-export function register_helper()
-{
-  logger.info(`Registering DND5E Helpers`);
-  /*
-    Override System Default
-  */
-  game.ose.rollItemMacro = (itemName) => {
+export class WorldsWithoutNumber extends BaseSystem {
+  static system = 'wwn';
+
+  registerSettings() {}
+
+  registerSheetListeners() {}
+
+  registerOther() {
+    game.wwn.rollItemMacro = this.rollItemMacro;
+  }
+
+  registerHooks() {}
+
+  get sheetRenderHooks() {
+    const {render, rendered, onChange} = super.sheetRenderHooks;
+
+    render.WwnActorSheetCharacter = ".item-image";
+    render.WwnActorSheetMonster = ".item-image";
+
+    return {render, rendered, onChange};
+  }
+
+  systemValidation(macro) {
+    return true;
+  }
+
+  rollItemMacro (itemName) {
     const speaker = ChatMessage.getSpeaker();
     let actor;
     if ( speaker.token ) actor = game.actors.tokens[speaker.token];
     if ( !actor ) actor = game.actors.get(speaker.actor);
-  
+
     // Get matching items
     const items = actor ? actor.items.filter(i => i.name === itemName) : [];
     if ( items.length > 1 ) {
@@ -21,26 +41,11 @@ export function register_helper()
       return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
     }
     const item = items[0];
-  
+
     // Trigger the item roll
-    if(item.hasMacro() && settings.value("defaultmacro"))
+    if (item.hasMacro() && settings.value("defaultmacro"))
       return item.executeMacro();
+
     return item.roll();
   }
-
 }
-
-export function sheetHooks()
-{
-  const renderSheets = {    
-    OseActorSheetCharacter : ".item-image", 
-    OseActorSheetMonster : ".item-image",
-  };
-  const renderedSheets = {
-
-  };
-
-  return { render : renderSheets, rendered : renderedSheets };
-}
-
-

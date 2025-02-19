@@ -31,7 +31,7 @@
     "verified": "11.308"
   },
   "esmodules": [
-    "scripts/hooks.js"
+    "scripts/hooks.mjs"
   ],
   "languages": [
     {
