@@ -117,7 +117,6 @@ export class helper {
         break;
       case "dnd5e":
         if (settings.value("defaultmacro")) dnd5e.register_helper();
-        dnd5e.applyTidy5eCompatibility();
         break;
       case "dungeonworld":
         if (settings.value("defaultmacro")) dungeonworld.register_helper();
