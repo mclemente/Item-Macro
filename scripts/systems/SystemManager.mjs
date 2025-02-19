@@ -12,6 +12,7 @@ import {WFRP4e} from "./handlers/WFRP4e.mjs";
 import {Worldbuilding} from "./handlers/Worldbuilding.mjs";
 import {WorldsWithoutNumber} from "./handlers/WorldsWithoutNumber.mjs";
 import {DungeonCrawlClassics} from "./handlers/DungeonCrawlClassics.mjs";
+import {Dragonbane} from "./handlers/Dragonbane.mjs";
 
 export class SystemManager {
   /**
@@ -26,6 +27,7 @@ export class SystemManager {
     CyberpunkRedCore,
     Demonlord,
     DND5e,
+    Dragonbane,
     DungeonCrawlClassics,
     Dungeonworld,
     OldSchoolEssentials,
