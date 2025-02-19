@@ -5,6 +5,10 @@ import * as demonlord from "./systems/demonlord.js";
 import * as dnd5e from "./systems/dnd5e.js";
 import * as dungeonworld from "./systems/dungeonworld.js";
 import * as ose from "./systems/ose.js";
+import * as wwn from "./systems/wwn.js";
+import * as demonlord from "./systems/demonlord.js";
+import * as cyberpunk from "./systems/cyberpunk-red-core.js";
+import * as worldbuilding from "./systems/worldbuilding.js";
 import * as sfrpg from "./systems/sfrpg.js";
 import * as shadowrun5e from "./systems/shadowrun5e.js";
 import * as swade from "./systems/swade.js";
@@ -130,6 +134,11 @@ export class helper {
       case "shadowrun5e":
         if (settings.value("defaultmacro")) shadowrun5e.register_helper();
         break;
+      case "wwn" :
+        if(settings.value("defaultmacro")) wwn.register_helper();
+        break;
+      case "demonlord" :
+        if(settings.value("defaultmacro")) demonlord.register_helper();
       case "swade":
         if (settings.value("defaultmacro")) swade.register_helper();
         break;
@@ -221,6 +230,11 @@ export class helper {
       case "sfrpg":
         if (settings.value("charsheet")) return sfrpg.sheetHooks();
         break;
+      case "wwn" :
+        if(settings.value("charsheet")) return wwn.sheetHooks();
+        break;
+      case "demonlord" :
+        if(settings.value("charsheet")) return demonlord.sheetHooks();
       case "shadowrun5e":
         if (settings.value("charsheet")) return shadowrun5e.sheetHooks();
         break;
