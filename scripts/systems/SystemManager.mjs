@@ -13,6 +13,7 @@ import {Worldbuilding} from "./handlers/Worldbuilding.mjs";
 import {WorldsWithoutNumber} from "./handlers/WorldsWithoutNumber.mjs";
 import {DungeonCrawlClassics} from "./handlers/DungeonCrawlClassics.mjs";
 import {Dragonbane} from "./handlers/Dragonbane.mjs";
+import {WorldOfDarkness} from "./handlers/WorldOfDarkness.mjs";
 
 export class SystemManager {
   /**
@@ -37,6 +38,7 @@ export class SystemManager {
     SWADE,
     WFRP4e,
     Worldbuilding,
+    WorldOfDarkness,
     WorldsWithoutNumber,
   ];
 

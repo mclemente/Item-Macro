@@ -85,7 +85,7 @@ export class helper {
 
         const itemTag = handler.itemTag;
         const li = img.parents(itemTag);
-        const id = li.attr("data-item-id") ?? img.attr("data-item-id");
+        const id = li.attr(handler.idDataAttr) ?? img.attr(handler.idDataAttr);
 
         if (!id) {
           logger.debug("Id Error | ", img, li, id);

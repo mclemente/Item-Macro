@@ -65,4 +65,8 @@ export class BaseSystem {
   get itemTag() {
     return game.system.hasOwnProperty('itemTag') ? game.system.itemTag() : '.item';
   }
+
+  get idDataAttr() {
+    return "data-item-id";
+  }
 }

@@ -5,6 +5,7 @@
 * Added Support for [Worlds Without Number](https://foundryvtt.com/packages/wwn) ([PR #15](https://github.com/Foundry-Workshop/Item-Macro/pull/15) by pandanielxd)
 * Added Support for [Dungeon Crawl Classics](https://foundryvtt.com/packages/ddc) ([#21](https://github.com/Foundry-Workshop/Item-Macro/issues/21))
 * Added Support for [Dragonbane](https://foundryvtt.com/packages/dragonbane) ([#17](https://github.com/Foundry-Workshop/Item-Macro/issues/17))
+* Added Support for [World of Darkness 20th edition](https://foundryvtt.com/packages/worldofdarkness) ([#12](https://github.com/Foundry-Workshop/Item-Macro/issues/12))
 * Refactored huge parts of the module:
   * Systems no longer are comprised of loose functions, instead they now need to extend the `BaseSystem` class.
   * Systems Handlers should now be added to the `SystemManager.#systemHandlers` array in `scripts/systems/SystemManager.mjs` file.
