@@ -15,6 +15,7 @@
 * Restored all settings for all systems to avoid future issues with 3rd party modules crashing due to non-existing settings
 * Added setting override framework to System Handlers
   * Hidden `click` and `charsheet` and renamed `defaultmacro` for DND5e system
+* Fixed Macro Hotbar Drop for Simple World-Building system ([#13](https://github.com/Foundry-Workshop/Item-Macro/issues/13))
 
 ## v1.11
 ### v1.11.1

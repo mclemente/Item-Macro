@@ -34,7 +34,7 @@ export class Worldbuilding extends BaseSystem {
      * so rely on it being async and not actually being able to
      * cancel the operation before our hook runs -- if anything is gonna
      * break, its this. */
-    Hooks.on("hotbarDrop", this._onHotbarDrop);
+    Hooks.on("hotbarDrop", this._onHotbarDrop.bind(this));
   }
 
   systemValidation(macro) {
@@ -57,29 +57,36 @@ export class Worldbuilding extends BaseSystem {
     return !!item.roll ? item.roll() : ui.notifications.warn(`Item ${itemName} either does not have a macro assigned or the current system has no default roll macro helper. Enable default macro execution override in Item Macro's settings.`);
   }
 
-  async _onHotbarDrop(_, data, slot) {
+  async #createMacro(dropData, slot) {
+    const item = await fromUuid(dropData.uuid);
+    const command = `game.worldbuilding.rollItemMacro('${item.name}')`;
+
+    let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
+
+    if (!macro) {
+      macro = await Macro.create({
+        name: item.name,
+        type: "script",
+        command: command,
+        flags: {
+          "worldbuilding.attrMacro": false,
+          "worldbuilding.itemMacro": true
+        }
+      });
+    }
+
+    await game.user.assignHotbarMacro(macro, slot);
+  }
+
+  _onHotbarDrop(_hotbar, dropData, slot) {
     /* If an item was dropped, handle it ourselves */
-    if (data.type === 'Item') {
-      const command = `game.worldbuilding.rollItemMacro('${data.data.name}')`;
-      const comparisonName = settings.isV10 ? data.name : data.data.name;
-      let macro = game.macros.find(m => (m.name === comparisonName) && (m.command === command));
-      if (!macro) {
-        macro = await Macro.create({
-          name: data.data.name,
-          type: "script",
-          command: command,
-          flags: {
-            "worldbuilding.attrMacro": false,
-            "worldbuilding.itemMacro": true
-          }
-        });
-      }
-      await game.user.assignHotbarMacro(macro, slot);
+    if (dropData.type === 'Item') {
+      this.#createMacro(dropData, slot);
+
       return false;
     }
 
     /* otherwise, let the system default go on */
-    //return original(data, slot, ...args);
     return true;
   }
 
