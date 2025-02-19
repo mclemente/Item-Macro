@@ -4,14 +4,6 @@ import {settings} from "../../settings.mjs";
 export class WFRP4e extends BaseSystem {
   static system = 'wfrp4e';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {}
-
-  registerHooks() {}
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
@@ -23,11 +15,23 @@ export class WFRP4e extends BaseSystem {
     return {render, rendered, onChange};
   }
 
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+  }
+
+  registerHooks() {
+  }
+
   systemValidation(macro) {
     return true;
   }
 
-  rollItemMacro (name, type, bypassData) {
+  rollItemMacro(name, type, bypassData) {
     const speaker = ChatMessage.getSpeaker();
     let actor, item;
 

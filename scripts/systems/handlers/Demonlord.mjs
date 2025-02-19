@@ -4,6 +4,15 @@ import {settings} from "../../settings.mjs";
 export class Demonlord extends BaseSystem {
   static system = 'demonlord';
 
+  get sheetRenderHooks() {
+    const {render, rendered, onChange} = super.sheetRenderHooks;
+
+    render.DLCharacterSheet = ".rollable, .attack-roll, .talent-roll, .magic-roll";
+    render.DLCreatureSheet = ".rollable, .attack-roll, .talent-roll, .magic-roll";
+
+    return {render, rendered, onChange};
+  }
+
   registerSettings() {
   }
 
@@ -21,15 +30,6 @@ export class Demonlord extends BaseSystem {
   }
 
   registerHooks() {
-  }
-
-  get sheetRenderHooks() {
-    const {render, rendered, onChange} = super.sheetRenderHooks;
-
-    render.DLCharacterSheet = ".rollable, .attack-roll, .talent-roll, .magic-roll";
-    render.DLCreatureSheet = ".rollable, .attack-roll, .talent-roll, .magic-roll";
-
-    return {render, rendered, onChange};
   }
 
   systemValidation(macro) {

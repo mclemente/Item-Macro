@@ -4,22 +4,25 @@ import {settings} from "../../settings.mjs";
 export class Shadowrun5e extends BaseSystem {
   static system = 'shadowrun5e';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {
-    game.shadowrun5e.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {}
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
     render.SR5BaseActorSheet = ".item-text.item-name.has-desc";
 
     return {render, rendered, onChange};
+  }
+
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+    game.shadowrun5e.rollItemMacro = this.rollItemMacro;
+  }
+
+  registerHooks() {
   }
 
   systemValidation(macro) {

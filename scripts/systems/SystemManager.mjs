@@ -39,9 +39,7 @@ export class SystemManager {
   /**
    * @type {{string: BaseSystem}}
    */
-  static #registeredHandlers = {
-
-  };
+  static #registeredHandlers = {};
 
   /**
    * @returns {BaseSystem}

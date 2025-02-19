@@ -4,20 +4,23 @@ import {settings} from "../../settings.mjs";
 export class DND5e extends BaseSystem {
   static system = 'dnd5e';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {}
-
-  registerHooks() {
-    Hooks.on("dnd5e.preUseItem", this.preUseItem);
-  }
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
     return {render, rendered, onChange};
+  }
+
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+  }
+
+  registerHooks() {
+    Hooks.on("dnd5e.preUseItem", this.preUseItem);
   }
 
   systemValidation(macro) {

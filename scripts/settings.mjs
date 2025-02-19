@@ -1,6 +1,6 @@
-import { logger } from "./logger.mjs";
+import {logger} from "./logger.mjs";
 
-export class settings{  
+export class settings {
 
   static get isV10() {
     return game.release?.generation >= 10;
@@ -10,55 +10,55 @@ export class settings{
     return settings.isV10 ? settings.data.id : settings.data.name;
   }
 
-  static value(str){
+  static value(str) {
     return game.settings.get(settings.id, str);
   }
 
-  static i18n(key){
+  static i18n(key) {
     return game.i18n.localize(key);
   }
 
-  static register_module(key){
+  static register_module(key) {
     const module = game.modules.get(key);
     settings.data = settings.isV10 ? module : module.data;
-    if(!settings.data) return logger.error("Module Registration Error | Data Error | ", key);
+    if (!settings.data) return logger.error("Module Registration Error | Data Error | ", key);
   }
 
-  static register(){
+  static register() {
     settings.register_module("itemacro");
     logger.info(`Registering All Settings.`);
     settings.register_settings();
   }
 
-  static reload(){
-    if ( !this.isV10 ) setTimeout(() => window.location.reload(), 500);
+  static reload() {
+    if (!this.isV10) setTimeout(() => window.location.reload(), 500);
   }
 
-  static register_settings(){
+  static register_settings() {
     const settingData = {
-      debug : {
-        scope : "client", config : true, default : false, type : Boolean
+      debug: {
+        scope: "client", config: true, default: false, type: Boolean
       },
-      defaultmacro : {
-        scope : "world", config : true, default : false, type : Boolean, onChange :  () => settings.reload(),
+      defaultmacro: {
+        scope: "world", config: true, default: false, type: Boolean, onChange: () => settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
-      charsheet : {
-        scope : "world", config : true, default : false, type : Boolean, onChange :  () => settings.reload(),
+      charsheet: {
+        scope: "world", config: true, default: false, type: Boolean, onChange: () => settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
-      visibilty : {
-        scope : "world", config : true, default : false, type : Boolean
+      visibilty: {
+        scope: "world", config: true, default: false, type: Boolean
       },
-      icon : {
-        scope : "world", config : true, default : false, type : Boolean
+      icon: {
+        scope: "world", config: true, default: false, type: Boolean
       },
-      click : {
-        scope : "world", config : true, default : false, type : Boolean, onChange :  ()=> settings.reload(),
+      click: {
+        scope: "world", config: true, default: false, type: Boolean, onChange: () => settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
       welcome: {
-        scope : "client", config : false, default : false, type : Boolean
+        scope: "client", config: false, default: false, type: Boolean
       }
     };
 
@@ -67,11 +67,11 @@ export class settings{
       delete settingData.click;
     }
 
-    Object.entries(settingData).forEach(([key, data])=> {
+    Object.entries(settingData).forEach(([key, data]) => {
       game.settings.register(
         settings.id, key, {
-          name : settings.i18n(`settings.${key}.title`),
-          hint : settings.i18n(`settings.${key}.hint`),
+          name: settings.i18n(`settings.${key}.title`),
+          hint: settings.i18n(`settings.${key}.hint`),
           ...data
         }
       );

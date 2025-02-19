@@ -4,16 +4,6 @@ import {settings} from "../../settings.mjs";
 export class SWADE extends BaseSystem {
   static system = 'swade';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {
-    game.swade.rollWeaponMacro = this.rollWeaponMacro;
-  }
-
-  registerHooks() {}
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
@@ -23,11 +13,24 @@ export class SWADE extends BaseSystem {
     return {render, rendered, onChange};
   }
 
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+    game.swade.rollWeaponMacro = this.rollWeaponMacro;
+  }
+
+  registerHooks() {
+  }
+
   systemValidation(macro) {
     return true;
   }
 
-  rollWeaponMacro (weaponName) {
+  rollWeaponMacro(weaponName) {
     const speaker = ChatMessage.getSpeaker();
     let actor;
     if (speaker.token)
@@ -43,7 +46,7 @@ export class SWADE extends BaseSystem {
     if (!item)
       return ui.notifications.warn(`Your controlled Actor does not have an item named ${weaponName}`);
 
-    if(item.hasMacro() && settings.value("defaultmacro"))
+    if (item.hasMacro() && settings.value("defaultmacro"))
       return item.executeMacro();
 
     return item.rollDamage();

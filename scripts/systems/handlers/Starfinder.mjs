@@ -4,16 +4,6 @@ import {settings} from "../../settings.mjs";
 export class Starfinder extends BaseSystem {
   static system = 'sfrpg';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {
-    game.sfrpg.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {}
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
@@ -24,6 +14,19 @@ export class Starfinder extends BaseSystem {
     render.ActorSheetSFRPGDrone = ".item .item-image";
 
     return {render, rendered, onChange};
+  }
+
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+    game.sfrpg.rollItemMacro = this.rollItemMacro;
+  }
+
+  registerHooks() {
   }
 
   systemValidation(macro) {

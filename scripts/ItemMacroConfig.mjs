@@ -13,6 +13,36 @@ export class ItemMacroConfig extends MacroConfig {
     });
   }
 
+  static _init(app, html, data) {
+    logger.debug("ItemMacroConfig.mjs | _init  | ", {app, html, data});
+
+    if ((settings.value("visibilty") && app.object.isOwner) || game.user.isGM) {
+      let openButton = $(`<a class="open-itemacro" title="itemacro"><i class="fas fa-sd-card"></i>${settings.value("icon") ? "" : "Item Macro"}</a>`);
+
+      openButton.click(async (event) => {
+        let Macro = null;
+        let Item = await fromUuid(app.document.uuid);
+
+        for (let key in app.document.apps) {
+          let obj = app.document.apps[key];
+          if (obj instanceof ItemMacroConfig) {
+            Macro = obj;
+            break;
+          }
+        }
+        if (!Macro)
+          Macro = new ItemMacroConfig(Item.getMacro(), {item: Item});
+        Macro.render(true);
+
+        logger.debug("ItemMacroConfig.mjs | _init click  | ", {event, Macro, Item});
+      });
+
+      html.closest('.app').find('.open-itemacro').remove();
+      let titleElement = html.closest('.app').find('.window-title');
+      openButton.insertAfter(titleElement);
+    }
+  }
+
   /*
     Override
   */
@@ -61,36 +91,5 @@ export class ItemMacroConfig extends MacroConfig {
     logger.debug("ItemMacroConfig.mjs | updateMacro  | ", {command, type, item, oldMacro, newMacro});
 
     this.object = newMacro;
-  }
-
-
-  static _init(app, html, data) {
-    logger.debug("ItemMacroConfig.mjs | _init  | ", {app, html, data});
-
-    if ((settings.value("visibilty") && app.object.isOwner) || game.user.isGM) {
-      let openButton = $(`<a class="open-itemacro" title="itemacro"><i class="fas fa-sd-card"></i>${settings.value("icon") ? "" : "Item Macro"}</a>`);
-
-      openButton.click(async (event) => {
-        let Macro = null;
-        let Item = await fromUuid(app.document.uuid);
-
-        for (let key in app.document.apps) {
-          let obj = app.document.apps[key];
-          if (obj instanceof ItemMacroConfig) {
-            Macro = obj;
-            break;
-          }
-        }
-        if (!Macro)
-          Macro = new ItemMacroConfig(Item.getMacro(), {item: Item});
-        Macro.render(true);
-
-        logger.debug("ItemMacroConfig.mjs | _init click  | ", {event, Macro, Item});
-      });
-
-      html.closest('.app').find('.open-itemacro').remove();
-      let titleElement = html.closest('.app').find('.window-title');
-      openButton.insertAfter(titleElement);
-    }
   }
 }

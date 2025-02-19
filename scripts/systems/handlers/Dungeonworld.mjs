@@ -4,22 +4,25 @@ import {settings} from "../../settings.mjs";
 export class Dungeonworld extends BaseSystem {
   static system = 'dungeonworld';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {
-    game.dungeonworld.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {}
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
     render.ActorSheet = ".item .rollable";
 
     return {render, rendered, onChange};
+  }
+
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+    game.dungeonworld.rollItemMacro = this.rollItemMacro;
+  }
+
+  registerHooks() {
   }
 
   systemValidation(macro) {

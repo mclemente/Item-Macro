@@ -4,16 +4,6 @@ import {settings} from "../../settings.mjs";
 export class WorldsWithoutNumber extends BaseSystem {
   static system = 'wwn';
 
-  registerSettings() {}
-
-  registerSheetListeners() {}
-
-  registerOther() {
-    game.wwn.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {}
-
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
@@ -23,21 +13,34 @@ export class WorldsWithoutNumber extends BaseSystem {
     return {render, rendered, onChange};
   }
 
+  registerSettings() {
+  }
+
+  registerSheetListeners() {
+  }
+
+  registerOther() {
+    game.wwn.rollItemMacro = this.rollItemMacro;
+  }
+
+  registerHooks() {
+  }
+
   systemValidation(macro) {
     return true;
   }
 
-  rollItemMacro (itemName) {
+  rollItemMacro(itemName) {
     const speaker = ChatMessage.getSpeaker();
     let actor;
-    if ( speaker.token ) actor = game.actors.tokens[speaker.token];
-    if ( !actor ) actor = game.actors.get(speaker.actor);
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    if (!actor) actor = game.actors.get(speaker.actor);
 
     // Get matching items
     const items = actor ? actor.items.filter(i => i.name === itemName) : [];
-    if ( items.length > 1 ) {
+    if (items.length > 1) {
       ui.notifications.warn(`Your controlled Actor ${actor.name} has more than one Item with name ${itemName}. The first matched item will be chosen.`);
-    } else if ( items.length === 0 ) {
+    } else if (items.length === 0) {
       return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
     }
     const item = items[0];

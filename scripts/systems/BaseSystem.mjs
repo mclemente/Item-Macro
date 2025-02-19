@@ -12,6 +12,14 @@ export class BaseSystem {
     throw new Error(`Attempted to override ${this.constructor.name}#system property with ${value} value. Property is read-only.`);
   }
 
+  /**
+   *
+   * @returns {{rendered: {}, onChange: *[], render: {}}}
+   */
+  get sheetRenderHooks() {
+    return {render: {}, rendered: {}, onChange: []};
+  }
+
   registerSettings() {
     throw new Error(`${this.constructor.name} must implement the registerSettings method.`);
   }
@@ -26,14 +34,6 @@ export class BaseSystem {
 
   registerOther() {
     throw new Error(`${this.constructor.name} must implement the registerOther method.`);
-  }
-
-  /**
-   *
-   * @returns {{rendered: {}, onChange: *[], render: {}}}
-   */
-  get sheetRenderHooks() {
-    return {render: {}, rendered: {}, onChange: []};
   }
 
   /**
