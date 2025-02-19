@@ -10,6 +10,9 @@
   * Allowed Item Macros to be of `chat` type.
 * Updated template for ItemMacroConfig
   * Fixed `Type` dropdown and `Execute Macro` button.
+* Restored all settings for all systems to avoid future issues with 3rd party modules crashing due to non-existing settings
+* Added setting override framework to System Handlers
+  * Hidden `click` and `charsheet` and renamed `defaultmacro` for DND5e system
 
 ## v1.11
 ### v1.11.1
