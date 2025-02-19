@@ -23,10 +23,6 @@ export class Demonlord extends BaseSystem {
     game.demonlord.rollWeaponMacro = this.rollWeaponMacro;
     game.demonlord.rollTalentMacro = this.rollTalentMacro;
     game.demonlord.rollSpellMacro = this.rollSpellMacro;
-
-    game.system.itemTag = () => {
-      return '.dl-item-row'
-    }
   }
 
   registerHooks() {
@@ -34,6 +30,10 @@ export class Demonlord extends BaseSystem {
 
   systemValidation(macro) {
     return true;
+  }
+
+  get itemTag() {
+    return '.dl-item-row';
   }
 
   /** #### #### ####    System Overrides    #### #### #### **/

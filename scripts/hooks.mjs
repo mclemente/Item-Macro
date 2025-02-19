@@ -8,7 +8,12 @@ Hooks.on('init', () => {
   settings.register();
 });
 
-Hooks.on('ready', helper.register);
+Hooks.on('ready', () => {
+  if (SystemManager.instance === null && game.user.isGM) {
+    ui.notifications.warn(game.i18n.format("warning.systemNotSupported", {system: game.system.title}));
+  }
+  helper.register();
+});
 
 Hooks.on('renderItemSheet', ItemMacroConfig._init);
 

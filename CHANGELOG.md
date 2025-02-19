@@ -3,6 +3,7 @@
 ## v2.0.0
 * Added Support for [Shadowrun 5e](https://foundryvtt.com/packages/shadowrun5e) ([PR #19](https://github.com/Foundry-Workshop/Item-Macro/pull/19) by Thogrim1984)
 * Added Support for [Worlds Without Number](https://foundryvtt.com/packages/wwn) ([PR #15](https://github.com/Foundry-Workshop/Item-Macro/pull/15) by pandanielxd)
+* Added Support for [Dungeon Crawl Classics](https://foundryvtt.com/packages/ddc) ([#21](https://github.com/Foundry-Workshop/Item-Macro/issues/21))
 * Refactored huge parts of the module:
   * Systems no longer are comprised of loose functions, instead they now need to extend the `BaseSystem` class.
   * Systems Handlers should now be added to the `SystemManager.#systemHandlers` array in `scripts/systems/SystemManager.mjs` file.

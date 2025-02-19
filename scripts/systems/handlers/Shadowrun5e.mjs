@@ -50,4 +50,8 @@ export class Shadowrun5e extends BaseSystem {
       return item.castAction();
     }
   }
+
+  get itemTag() {
+    return '.list-item';
+  }
 }

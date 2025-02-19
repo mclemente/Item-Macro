@@ -61,4 +61,8 @@ export class BaseSystem {
   systemValidation(macro) {
     return true;
   }
+
+  get itemTag() {
+    return game.system.hasOwnProperty('itemTag') ? game.system.itemTag() : '.item';
+  }
 }

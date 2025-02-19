@@ -63,7 +63,7 @@ export class settings {
       }
     };
 
-    SystemManager.instance.registerSettings(settingData);
+    SystemManager.instance?.registerSettings(settingData);
 
     for (let [key, data] of Object.entries(settingData)) {
       data = foundry.utils.mergeObject({

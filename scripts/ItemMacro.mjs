@@ -40,7 +40,7 @@ export default class ItemMacro extends Macro {
 
     logger.debug("ItemMacro | #executeScript | ", {this: this, speaker, actor, token, character, item, event, args});
 
-    if (SystemManager.instance.systemValidation(this) === false)
+    if (SystemManager.instance?.systemValidation(this) === false)
       return;
 
     //build script execution

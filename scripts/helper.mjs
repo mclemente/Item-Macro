@@ -51,6 +51,8 @@ export class helper {
 
   static systemHandler() {
     const handler = SystemManager.instance;
+    if (!handler) return;
+
     const sheetHooks = handler.sheetRenderHooks;
 
     handler.registerHooks();
@@ -58,12 +60,12 @@ export class helper {
     handler.registerSheetListeners();
 
     if (sheetHooks && settings.value("charsheet")) {
-      Object.entries(sheetHooks).forEach(([preKey, obj]) => {
-        if (obj instanceof Object)
-          Object.entries(obj).forEach(([key, str]) => {
-            Hooks.on(`${preKey}${key}`, (app, html, _data) => changeButtonExecution(app, html, str, sheetHooks.onChange));
-          });
-      });
+      for (const [preKey, obj] of Object.entries(sheetHooks)) {
+        if (!(obj instanceof Object)) continue;
+        for (const [key, str] of Object.entries(obj)) {
+          Hooks.on(`${preKey}${key}`, (app, html, _data) => changeButtonExecution(app, html, str, sheetHooks.onChange));
+        }
+      }
     }
 
     async function changeButtonExecution(app, html, str, onChange = []) {
@@ -81,10 +83,7 @@ export class helper {
       for (let img of itemImages) {
         img = $(img);
 
-        // @todo refactor into class-based systems with default parent method
-        const itemTag = game.system.hasOwnProperty('itemTag')
-          ? game.system.itemTag()
-          : (game.system.id === 'shadowrun5e' ? '.list-item' : '.item');
+        const itemTag = handler.itemTag;
         const li = img.parents(itemTag);
         const id = li.attr("data-item-id") ?? img.attr("data-item-id");
 
@@ -215,7 +214,7 @@ export class helper {
   }
 
   static systemValidation(macro) {
-    return SystemManager.instance.systemValidation(macro);
+    return SystemManager.instance?.systemValidation(macro);
   }
 
   static async postMessage() {
