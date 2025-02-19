@@ -14,6 +14,7 @@ import {WorldsWithoutNumber} from "./handlers/WorldsWithoutNumber.mjs";
 import {DungeonCrawlClassics} from "./handlers/DungeonCrawlClassics.mjs";
 import {Dragonbane} from "./handlers/Dragonbane.mjs";
 import {WorldOfDarkness} from "./handlers/WorldOfDarkness.mjs";
+import {Symbaroum} from "./handlers/Symbaroum.mjs";
 
 export class SystemManager {
   /**
@@ -36,6 +37,7 @@ export class SystemManager {
     Shadowrun5e,
     Starfinder,
     SWADE,
+    Symbaroum,
     WFRP4e,
     Worldbuilding,
     WorldOfDarkness,
