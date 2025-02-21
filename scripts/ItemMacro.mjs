@@ -10,6 +10,10 @@ export default class ItemMacro extends Macro {
     this.item = context.item;
   }
 
+  testUserPermission(user, permission, {exact = false} = {}) {
+    return this.item?.testUserPermission(user, permission, {exact});
+  }
+
   #executeChat(speaker) {
     return ui.chat.processMessage(this.command, {speaker}).catch(err => {
       Hooks.onError("Macro#_executeChat", err, {

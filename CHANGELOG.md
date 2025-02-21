@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.1
+* Fix Item Macro permission for players 
+
 ## v2.0.0
 * Added Support for [Shadowrun 5e](https://foundryvtt.com/packages/shadowrun5e) ([PR #19](https://github.com/Foundry-Workshop/Item-Macro/pull/19) by Thogrim1984)
 * Added Support for [Worlds Without Number](https://foundryvtt.com/packages/wwn) ([PR #15](https://github.com/Foundry-Workshop/Item-Macro/pull/15) by pandanielxd)
