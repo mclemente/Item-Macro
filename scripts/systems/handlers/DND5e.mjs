@@ -25,12 +25,28 @@ export class DND5e extends BaseSystem {
   }
 
   registerHooks() {
-    Hooks.on("dnd5e.preUseItem", this.preUseItem);
+      Hooks.on("dnd5e.preUseActivity", this.preUseActivity);
   }
 
   systemValidation(macro) {
-    if (foundry.utils.isNewerVersion("3.0.0", game.system.version)) {
-      ui.notifications.warn("itemacro.dnd5e.systemDeprecationv3", {localize: true, permanent: true});
+    const olderThan4 = foundry.utils.isNewerVersion("4.0.0", game.system.version);
+
+    if (olderThan4) {
+      ui.notifications.warn("itemacro.dnd5e.systemDeprecationv4", {localize: true, permanent: true});
+
+      return false;
+    }
+
+    let regex = /\.use\(\{[^}]*}, \{[^}]*skipItemMacro: true[^}]*}\)/g;
+    if (regex.test(macro.command)) {
+      ui.notifications.error("itemacro.dnd5e.skipItemMacroDeprecation", {localize: true, permanent: true});
+
+      return false;
+    }
+
+    regex = /item\.use\(\s*\{((?!.*legacy: false.*)|(?!.*skipItemMacro: true.*))([^}]*)}[^)]*\);/g;
+    if (regex.test(macro.command)) {
+      ui.notifications.error("itemacro.dnd5e.useFunctionWarning", {localize: true, permanent: true});
 
       return false;
     }
@@ -38,8 +54,10 @@ export class DND5e extends BaseSystem {
     return true;
   }
 
-  preUseItem(item, config, options) {
-    if (options.skipItemMacro === true)
+  preUseActivity(activity, usageConfig, dialogConfig, messageConfig) {
+    const item = activity.item;
+
+    if (usageConfig.skipItemMacro === true)
       return true;
 
     if (!item.hasMacro())
@@ -48,10 +66,13 @@ export class DND5e extends BaseSystem {
     if (!settings.value("defaultmacro"))
       return true;
 
-    item.executeMacro({config, options}).then((result) => {
+    item.executeMacro({usageConfig, dialogConfig, messageConfig}).then((result, a,b,c,d) => {
+      console.log({result, a,b,c,d})
+      debugger;
       if (result === true) {
-        options.skipItemMacro = true;
-        item.use(config, options);
+        usageConfig.skipItemMacro = true;
+        usageConfig.legacy = false;
+        activity.use(usageConfig, dialogConfig, messageConfig);
       }
     });
 

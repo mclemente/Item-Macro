@@ -11,6 +11,10 @@ You can execute the macro from the "item" class using the executeMacro(...args) 
 
 # Installation
 
+_**Item Macro v2.1.0 onwards will not work with DnD 5e 3.3.1**_   
+_If you do not use the newest version of the DnD 5e system, please do not update Item Macro and install v2.0.1 instead using [this manifest link](https://github.com/Foundry-Workshop/Item-Macro/releases/download/v2.0.1/module.json)._  
+_You can read more about these changes in [v2.1.0 Release](https://github.com/Foundry-Workshop/Item-Macro/releases/tag/v2.1.0) notes._
+
 _**Item Macro v1.11.0 onwards will not work with DnD 5e 2.4.**_   
 _If you do not use the newest version of the DnD 5e system, please do not update Item Macro and install v1.10.5 instead using [this manifest link](https://github.com/Foundry-Workshop/Item-Macro/releases/download/v1.10.5/module.json)._  
 _You can read more about these changes in [v1.11.0 Release](https://github.com/Foundry-Workshop/Item-Macro/releases/tag/v1.11.0) notes._

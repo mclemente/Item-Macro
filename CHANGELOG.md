@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.1.0
+#### DnD5e
+* Switched DnD 5e's support from `dnd5e.preUseItem` Hook to `preUseActivity` Hook
+* Item Macros that you wish to still execute "standard" `item.use()` must now do it in one of two ways:
+  * Return `true` from macro, or
+  * Call `item.use({{skipItemMacro: true, legacy: falce})` instead (passing `skipItemMacro = true` and `legacy = false` in `usageConfig` argument)
+
 ## v2.0.1
 * Fix Item Macro permission for players 
 
