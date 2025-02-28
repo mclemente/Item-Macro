@@ -1,5 +1,8 @@
 # Changelog
 
+### v2.2.1
+* Removed debugger
+
 ## v2.2.0
 * Change how additional parameters are passed to Item Macro
   * First parameters is expected to be a `scope` object and its fields will be available in Item Macro under `args` argument, for example `args.activity`
