@@ -42,10 +42,10 @@ export class helper {
       }
     }
 
-    Item.prototype.executeMacro = async function (...args) {
+    Item.prototype.executeMacro = async function (scope= {}, ...args) {
       if (!this.hasMacro()) return;
 
-      return this.getMacro().execute(args);
+      return this.getMacro().execute(scope, ...args);
     }
   }
 
@@ -102,13 +102,13 @@ export class helper {
 
         if (settings.value("click")) {
           img.contextmenu((event) => {
-            item.executeMacro(event);
+            item.executeMacro({event});
           })
         } else {
           img.off();
           img.click((event) => {
             logger.debug("Img Click | ", img, event);
-            item.executeMacro(event);
+            item.executeMacro({event});
           });
         }
         onChange.forEach(fn => fn(img, item, html));

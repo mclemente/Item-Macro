@@ -8,6 +8,8 @@ export default class ItemMacro extends Macro {
     super(data, context);
 
     this.item = context.item;
+
+    SystemManager.instance?.systemMigration(this);
   }
 
   testUserPermission(user, permission, {exact = false} = {}) {
@@ -25,14 +27,16 @@ export default class ItemMacro extends Macro {
     });
   }
 
-  #getEvent(args) {
-    let a = args[0];
-    if (a instanceof Event) return args[0].shift();
-    if (a?.originalEvent instanceof Event) return args.shift().originalEvent;
+  #getEvent(scope) {
+    let a = scope.event;
+    if (a instanceof Event) return a;
+    if (a?.originalEvent instanceof Event) return a.originalEvent;
+
     return undefined;
   }
 
-  async #executeScript(...args) {
+  async #executeScript(scope = {}, ...otherArgs) {
+    debugger;
     const item = this.item;
     const speaker = ChatMessage.getSpeaker({actor: item.actor});
     const actor = item.actor ?? game.actors.get(speaker.actor);
@@ -40,7 +44,11 @@ export default class ItemMacro extends Macro {
     /* MMH@TODO Check the types returned by linked and unlinked */
     const token = canvas.tokens?.get(speaker.token);
     const character = game.user.character;
-    const event = this.#getEvent(args);
+    const event = this.#getEvent(scope);
+    const args = {
+      ...scope,
+      ...otherArgs,
+    };
 
     logger.debug("ItemMacro | #executeScript | ", {this: this, speaker, actor, token, character, item, event, args});
 
@@ -64,7 +72,7 @@ export default class ItemMacro extends Macro {
     }
   }
 
-  execute(scope = {}) {
+  execute(scope = {}, ...args) {;
     if (!this.canExecute) {
       ui.notifications.warn(`You do not have permission to execute Macro "${this.name}".`);
       return;
@@ -74,7 +82,7 @@ export default class ItemMacro extends Macro {
       case "chat":
         return this.#executeChat(scope.speaker);
       case "script":
-        return this.#executeScript(scope);
+        return this.#executeScript(scope, ...args);
     }
   }
 }

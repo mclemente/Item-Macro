@@ -54,6 +54,11 @@ export class DND5e extends BaseSystem {
     return true;
   }
 
+  systemMigration(macro) {
+    const regex = /item\.use\(\s*{\s*}\s*,\s*{\s*skipItemMacro\s*:\s*true\s*}\)/g
+    macro.command = macro.command.replace(regex, "item.use({skipItemMacro: true, legacy: false})");
+  }
+
   preUseActivity(activity, usageConfig, dialogConfig, messageConfig) {
     const item = activity.item;
 
@@ -66,9 +71,7 @@ export class DND5e extends BaseSystem {
     if (!settings.value("defaultmacro"))
       return true;
 
-    item.executeMacro({usageConfig, dialogConfig, messageConfig}).then((result, a,b,c,d) => {
-      console.log({result, a,b,c,d})
-      debugger;
+    item.executeMacro({activity, usageConfig, dialogConfig, messageConfig}).then((result) => {
       if (result === true) {
         usageConfig.skipItemMacro = true;
         usageConfig.legacy = false;

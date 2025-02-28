@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.2.0
+* Change how additional parameters are passed to Item Macro
+  * First parameters is expected to be a `scope` object and its fields will be available in Item Macro under `args` argument, for example `args.activity`
+  * all additional parameters will be added to `scope` object via destructuring and will also be available under `args` argument, for example `args[0]`
+#### DnD5e
+* Added automatic migration of `item.use({}, {skipItemMacro: true})` to `item.use({{skipItemMacro: true, legacy: falce})`
+  * This automatic migration only works if no other data was passed to `item.use`.
+
 ## v2.1.0
 #### DnD5e
 * Switched DnD 5e's support from `dnd5e.preUseItem` Hook to `dnd5e.preUseActivity` Hook

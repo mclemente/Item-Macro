@@ -55,12 +55,18 @@ export class BaseSystem {
   }
 
   /**
-   * @param {Macro} macro
+   * @param {ItemMacro} macro
    * @returns {boolean}
    */
   systemValidation(macro) {
     return true;
   }
+
+  /**
+   *
+   * @param {ItemMacro} macro
+   */
+  systemMigration(macro) {}
 
   get itemTag() {
     return game.system.hasOwnProperty('itemTag') ? game.system.itemTag() : '.item';
