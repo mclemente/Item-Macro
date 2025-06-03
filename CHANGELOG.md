@@ -5,6 +5,7 @@
 * Button to open Macro Config now appears on Item Sheets that extend AppV1 as well as ApplicationV2
 * Item Macro Config now uses CodeMirror
 * Item Macro Config can now also be opened using `new game.modules.get('itemacro').ItemMacroConfig.openConfig(item)`;
+* Update SWADE support to also be able to listen to `swadeAction` Hook.
 
 ### v2.2.1
 * Removed debugger
