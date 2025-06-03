@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.0
+* Updated Item Macro for Foundry v13, dropping v12 support.
+* Button to open Macro Config now appears on Item Sheets that extend AppV1 as well as ApplicationV2
+* Item Macro Config now uses CodeMirror
+* Item Macro Config can now also be opened using `new game.modules.get('itemacro').ItemMacroConfig.openConfig(item)`;
+
 ### v2.2.1
 * Removed debugger
 
