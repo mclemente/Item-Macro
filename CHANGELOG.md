@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.1
+* Fixed element search logic to work with both AppV1 and AppV2 sheets.
+* Prevented Event Propagation on rollable clicks with Character Sheet Hook enabled.  
+
 ## v3.0.0
 * Updated Item Macro for Foundry v13, dropping v12 support.
 * Button to open Macro Config now appears on Item Sheets that extend AppV1 as well as ApplicationV2
