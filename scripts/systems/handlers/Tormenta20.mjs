@@ -14,7 +14,6 @@ export class Tormenta20 extends BaseSystem {
   }
 
   registerOther() {
-	const origFn = game.tormenta20.rollItemMacro;
 	game.tormenta20.rollItemMacro = (itemName, options = {}) => {
 		const speaker = ChatMessage.getSpeaker();
 		let actor;
@@ -26,7 +25,7 @@ export class Tormenta20 extends BaseSystem {
 
 		if (item?.hasMacro() && settings.value("defaultmacro")) return item.executeMacro();
 
-		return origFn(itemName, options);
+		return game.tormenta20.macros.rollItemMacro(itemName, options);
 	}
   }
 }
