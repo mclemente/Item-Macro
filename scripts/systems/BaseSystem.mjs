@@ -28,31 +28,31 @@ export class BaseSystem {
    * @return void
    */
   registerSettings(settingsData) {
-    throw new Error(`${this.constructor.name} must implement the registerSettings method.`);
+    const hasRenderHooks = !(
+          Object.keys(this.sheetRenderHooks.render).length === 0
+          && Object.keys(this.sheetRenderHooks.rendered).length === 0
+          && this.sheetRenderHooks.onChange.length === 0
+        )
+    settingsData.charsheet.config = hasRenderHooks;
+    settingsData.click.config = hasRenderHooks;
   }
 
   /**
    * @return void
    */
-  registerHooks() {
-    throw new Error(`${this.constructor.name} must implement the registerHooks method.`);
-  }
+  registerHooks() {}
 
 
   /**
    * @return void
    */
-  registerSheetListeners() {
-    throw new Error(`${this.constructor.name} must implement the registerSheetListeners method.`);
-  }
+  registerSheetListeners() {}
 
 
   /**
    * @return void
    */
-  registerOther() {
-    throw new Error(`${this.constructor.name} must implement the registerOther method.`);
-  }
+  registerOther() {}
 
   /**
    * @param {ItemMacro} macro

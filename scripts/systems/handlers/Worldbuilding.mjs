@@ -4,6 +4,13 @@ import {settings} from "../../settings.mjs";
 export class Worldbuilding extends BaseSystem {
   static system = 'worldbuilding';
 
+  get settings() {
+    return {
+      ...super.settings,
+      defaultmacro: true
+    }
+  }
+
   get sheetRenderHooks() {
     const {render, rendered, onChange} = super.sheetRenderHooks;
 
@@ -12,12 +19,6 @@ export class Worldbuilding extends BaseSystem {
     onChange.push(this.addHover);
 
     return {render, rendered, onChange};
-  }
-
-  registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
   }
 
   registerOther() {
@@ -35,10 +36,6 @@ export class Worldbuilding extends BaseSystem {
      * cancel the operation before our hook runs -- if anything is gonna
      * break, its this. */
     Hooks.on("hotbarDrop", this._onHotbarDrop.bind(this));
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   rollItemMacro(itemName) {

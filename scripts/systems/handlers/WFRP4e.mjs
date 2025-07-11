@@ -16,19 +16,8 @@ export class WFRP4e extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
-  }
-
-  registerOther() {
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   rollItemMacro(name, type, bypassData) {

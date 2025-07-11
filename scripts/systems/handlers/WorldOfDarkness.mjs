@@ -21,23 +21,6 @@ export class WorldOfDarkness extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings(settingsData)  {
-    settingsData.defaultmacro.config = false;
-  }
-
-  registerSheetListeners() {
-  }
-
-  registerOther() {
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
-  }
-
   get idDataAttr() {
     return 'data-itemid';
   }

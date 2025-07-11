@@ -13,20 +13,12 @@ export class Dungeonworld extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.dungeonworld.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   rollItemMacro(itemName) {

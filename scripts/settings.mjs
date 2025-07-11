@@ -41,11 +41,11 @@ export class settings {
         scope: "client", config: true, default: false, type: Boolean
       },
       defaultmacro: {
-        scope: "world", config: true, default: false, type: Boolean, onChange: () => settings.reload(),
+        scope: "world", config: false, default: false, type: Boolean, onChange: () => settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
       charsheet: {
-        scope: "world", config: true, default: false, type: Boolean, onChange: () => settings.reload(),
+        scope: "world", config: false, default: false, type: Boolean, onChange: () => settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
       visibilty: {
@@ -55,7 +55,7 @@ export class settings {
         scope: "world", config: true, default: false, type: Boolean
       },
       click: {
-        scope: "world", config: true, default: false, type: Boolean, onChange: () => settings.reload(),
+        scope: "world", config: false, default: false, type: Boolean, onChange: () => settings.reload(),
         requiresReload: this.isV10 ? true : undefined
       },
       welcome: {

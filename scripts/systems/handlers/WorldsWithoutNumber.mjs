@@ -14,20 +14,8 @@ export class WorldsWithoutNumber extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
-  }
-
-  registerOther() {
-    game.wwn.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   rollItemMacro(itemName) {

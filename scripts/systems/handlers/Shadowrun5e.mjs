@@ -13,20 +13,12 @@ export class Shadowrun5e extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.shadowrun5e.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   rollItemMacro(itemName) {

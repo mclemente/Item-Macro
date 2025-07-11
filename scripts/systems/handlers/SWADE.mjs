@@ -14,9 +14,8 @@ export class SWADE extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
@@ -25,10 +24,6 @@ export class SWADE extends BaseSystem {
 
   registerHooks() {
     Hooks.on("swadeAction", this.swadeAction);
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   rollWeaponMacro(weaponName) {

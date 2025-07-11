@@ -13,22 +13,13 @@ export class Symbaroum extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings(settingsData)  {
-    settingsData.defaultmacro.config = false;
-  }
-
-  registerSheetListeners() {
+  registerSettings(settingsData) {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.symbaroum.macros.rollItem = this.rollItem;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   rollItem(itemName) {

@@ -14,20 +14,12 @@ export class OldSchoolEssentials extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.ose.rollItemMacro = this.rollItemMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   rollItemMacro(itemName) {

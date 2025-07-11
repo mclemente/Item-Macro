@@ -12,21 +12,13 @@ export class Dragonbane extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings(settingsData)  {
-  }
-
-  registerSheetListeners() {
+  registerSettings(settingsData) {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.dragonbane.useItem = this.useItemMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   get itemTag() {

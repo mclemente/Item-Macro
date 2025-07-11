@@ -13,21 +13,13 @@ export class DungeonCrawlClassics extends BaseSystem {
     return {render, rendered, onChange};
   }
 
-  registerSettings(settingsData)  {
-  }
-
-  registerSheetListeners() {
+  registerSettings(settingsData) {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.dcc.rollDCCWeaponMacro = this.rollDCCWeaponMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   get itemTag() {

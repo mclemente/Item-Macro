@@ -14,22 +14,14 @@ export class Demonlord extends BaseSystem {
   }
 
   registerSettings(settingsData) {
-  }
-
-  registerSheetListeners() {
+    super.registerHooks(settingsData);
+    settingsData.defaultmacro.config = true;
   }
 
   registerOther() {
     game.demonlord.rollWeaponMacro = this.rollWeaponMacro;
     game.demonlord.rollTalentMacro = this.rollTalentMacro;
     game.demonlord.rollSpellMacro = this.rollSpellMacro;
-  }
-
-  registerHooks() {
-  }
-
-  systemValidation(macro) {
-    return true;
   }
 
   get itemTag() {
